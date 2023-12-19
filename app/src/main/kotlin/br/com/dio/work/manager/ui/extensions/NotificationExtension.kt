@@ -17,9 +17,11 @@ import com.squareup.picasso.Picasso
 private const val NOTIFICATION_ID = 1
 private const val CHANNEL_ID = "new_channel_video"
 
+//função pública - notificação a apertir do vídeo json
 fun Context.showBigPictureNotification(
     video: Video
 ) {
+    //pegar instância do picasso
     val bitmapBigPicture = Picasso.get()
         .load(video.thumbnail).get()
 
@@ -45,6 +47,8 @@ private fun Context.showNotification(video: Video, bitmapBigPicture: Bitmap? = n
         )
 }
 
+//definir os channel!! importante pois o usuário pode querer nao receber
+//certas notificações
 private fun Context.createNotificationChannel() {
     val name = getString(
         R.string.notification_verbose_name
@@ -73,6 +77,7 @@ private fun Context.getNotification(
         .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
         .setAutoCancel(true)
 
+    //veirificsar se a imagem nã otá nula pra settar nossa imagem
     if (bitmapBigPicture != null) {
         notification
             .setLargeIcon(bitmapBigPicture)
@@ -87,6 +92,7 @@ private fun Context.getNotification(
     return notification.build()
 }
 
+//abrir o youtube pra mostrar o vídeo
 private fun Context.getPendingIntent(videoUrl: String): PendingIntent {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl))
 
