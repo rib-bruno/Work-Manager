@@ -18,8 +18,11 @@ object VideoDataSource {
         //como a gente quer uma lsita de vídeos, typetoken
         return fromJson(
             assetManager.open(filename).bufferedReader(),
-            object : TypeToken<Video>() {}.type
+            object : TypeToken<T>() {}.type
         )
     }
+
+    //retornar qualquer objeto dentro da lista
+    fun getRandomVideo(): Video = list.random()
 
 }
