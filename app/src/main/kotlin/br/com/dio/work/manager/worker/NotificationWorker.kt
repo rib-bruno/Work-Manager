@@ -2,8 +2,10 @@ package br.com.dio.work.manager.worker
 
 import android.content.Context
 import android.util.Log
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -45,6 +47,23 @@ class NotificationWorker(
                 .setInitialDelay(2, TimeUnit.MINUTES)
                 .build()
 
-    }
 
+        fun startPeriodic(context: Context) {
+            Log.i(TAG, "starting the worker with period")
+            WorkManager.getInstance(context)
+                .enqueueUniquePeriodicWork(
+                    WORKER_NAME,
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    createPeriodicRequest() //recebendo um builder
+                )
+        }
+
+        private fun createPeriodicRequest() =
+            PeriodicWorkRequestBuilder<NotificationWorker>(
+                1,
+                TimeUnit.MINUTES
+            ) //.setConstraints()
+                .build()
+
+    }
 }

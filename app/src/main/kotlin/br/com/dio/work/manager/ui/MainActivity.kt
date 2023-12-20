@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //startando o worker
-        NotificationWorker.start(this)
+       // NotificationWorker.start(this)
+        NotificationWorker.startPeriodic(this)
     }
 }
